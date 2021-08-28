@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "ConfitecWebAPP"
+    }
+  },
+  "defaultProject": "ConfitecWebAPP",
+  "cli": {
+    "analytics": "412cefcb-9331-460e-9906-083b33c5bc52"
+  }
 }

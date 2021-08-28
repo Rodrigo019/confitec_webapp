@@ -1,4 +1,6 @@
+import { UsuarioService } from './services/usuario/usuarioservice';
 import { Component } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ConfitecWebAPP';
+
+  constructor(protected usuarioService: UsuarioService) {
+    this.usuarioService.get(1)
+  }
 }

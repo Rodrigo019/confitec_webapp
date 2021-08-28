@@ -1,0 +1,53 @@
+<h1>
+    Cadastro de Usuários
+</h1>
+
+<form [formGroup]="formulario" (ngSubmit)="submitForm()">
+    <div class="row">
+        <input type="hidden" formControlName="teste" class="form-control">
+        <div class="col-5">
+            <div class="form-group">
+                <label for="nome" class="control-label">Nome</label>
+                <input type="text" formControlName="nome" class="form-control">
+            </div>
+        </div>
+        <div class="col-7">
+            <div class="form-group">
+                <label for="sobrenome" class="control-label">Sobrenome</label>
+                <input type="text" formControlName="sobrenome" class="form-control">
+            </div>
+        </div>    
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <label for="email" class="control-label">E-mail</label>
+                <input type="email" formControlName="email" class="form-control">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label for="dataNascimento" class="control-label">Data de Nascimento</label>
+                <input type="datetime-local" formControlName="dataNascimento" class="form-control">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label for="escolaridade" class="control-label">Escolaridade</label>
+                <select formControlName="escolaridade" class="form-control">
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="0">INFANTIL</option>
+                    <option value="1">FUNDAMENTAL</option>
+                    <option value="2">MEDIO</option>
+                    <option value="3">SUPERIOR</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <button type="button" ngIf="id > 0" class="btn btn-danger" (click)="excluir()">Excluir</button>
+</form>
+
+
