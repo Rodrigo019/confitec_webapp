@@ -17,7 +17,7 @@ export class ServiceBase<T> {
         return this.client.get<Resposta<T>>(`${this.urlBase}${this.controller}/${id}`);
     }
 
-    public getPaged(query:string) : Observable<Resposta<{[key:number]:T[]}>> {
+    public getPaged(query:string) : Observable<any> {
         return this.client.get<any>(`${this.urlBase}${this.controller}Paged${query}`);
     }
 

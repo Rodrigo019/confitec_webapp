@@ -1,5 +1,7 @@
 import { UsuarioService } from './../../../services/usuario/usuarioservice';
 import { Component, OnInit } from '@angular/core';
+import { Usuario } from 'src/app/models/usuario/usuario';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'usuario-listagem',
@@ -8,16 +10,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsuarioListagemComponent implements OnInit {
 
-  constructor(
-    protected service: UsuarioService
-  ) { }
+  public usuarios: Usuario[] = [];
+  public paginaAtual = 1;
 
-  ngOnInit(): void {
-    this.service.get(1).subscribe(
+  constructor(
+    protected route: Router,
+    protected service: UsuarioService
+  ) {
+    this.buscarRegistros();
+   }
+
+  ngOnInit(): void {  }
+
+  pageChange(event) {
+    this.paginaAtual = event;
+  }
+  
+  buscarRegistros(){
+    this.service.getPaged(`?PaginacaoInicio=1&PaginacaoQuantidade=200`).subscribe(
       (data) => {
-        console.log(data);
-      }
-    )
+        this.usuarios = data.retorno.value
+        console.log(this.usuarios);
+      },
+      erro => console.log(erro)
+    );
   }
 
+  alterar(id:number) {
+    this.route.navigateByUrl(`usuarios/cadastro/${id}`);
+  }
+
+  novoUsuario() {
+    this.route.navigateByUrl(`usuarios/cadastro/0`);
+  }
 }

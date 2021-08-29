@@ -1,7 +1,7 @@
 <h1>
     Cadastro de Usuários
 </h1>
-
+<br>
 <form [formGroup]="formulario" (ngSubmit)="submitForm()">
     <div class="row">
         <input type="hidden" formControlName="teste" class="form-control">
@@ -47,7 +47,8 @@
     </div>
     <br>
     <button type="submit" class="btn btn-primary">Salvar</button>
-    <button type="button" ngIf="id > 0" class="btn btn-danger" (click)="excluir()">Excluir</button>
+    <button type="button" *ngIf="id > 0" class="btn btn-danger" (click)="excluir()">Excluir</button>
 </form>
 
 
+<notifier-container></notifier-container>

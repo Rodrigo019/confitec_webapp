@@ -1,1 +1,25 @@
-<app-titulo titulo="Listagem de Usuários"></app-titulo>
+<h1>
+    Listagem de usuários
+</h1>
+<br>
+<table class="table table-responsive table-hover">
+    <thead>
+        <th>Id</th>
+        <th>Nome</th>
+        <th>Sobrenome</th>
+        <th>Data de Nascimento</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let usuario of usuarios | paginate: { itemsPerPage: 10, currentPage: paginaAtual }">
+            <td>{{usuario.id}}</td>
+            <td>{{usuario.nome}}</td>
+            <td>{{usuario.sobrenome}}</td>
+            <td>{{usuario.dataNascimento | date: 'M/d/yy, h:mm a'}}</td>
+            <td><button class="btn btn-warning" (click)="alterar(usuario.id)">Alterar</button></td>
+        </tr>
+    </tbody>    
+</table>
+
+<pagination-controls (pageChange)="pageChange($event)" previousLabel="Anterior" nextLabel="Próximo"></pagination-controls>
+<button type="button" class="btn btn-success" (click)="novoUsuario()">Novo Usuário</button>
+

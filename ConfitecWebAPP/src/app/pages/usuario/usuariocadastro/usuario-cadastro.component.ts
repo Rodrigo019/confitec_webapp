@@ -2,8 +2,9 @@ import { Resposta } from './../../../models/api/resposta';
 import { UsuarioService } from './../../../services/usuario/usuarioservice';
 import { Usuario } from './../../../models/usuario/usuario';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'usuario-cadastro',
@@ -12,16 +13,16 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class UsuarioCadastroComponent implements OnInit {
 
-  protected id: number;
+  public id: number;
   protected model: Usuario;
   public formulario: FormGroup;
 
   constructor(
+    protected router: Router,
     protected route: ActivatedRoute,
     protected service: UsuarioService,
-    protected formBuilder: FormBuilder
+    protected formBuilder: FormBuilder,
   ) { 
-
   }
 
   ngOnInit(): void {
@@ -32,7 +33,6 @@ export class UsuarioCadastroComponent implements OnInit {
         (data: Resposta<Usuario>) => {
           this.model = data.retorno;
           this.carregaFormulario();
-          console.log(this.formulario);
         },
         (erro: Resposta<Usuario>) => {
           console.log(erro);
@@ -40,7 +40,6 @@ export class UsuarioCadastroComponent implements OnInit {
       );
     } else {
       this.carregaFormulario();
-      console.log(this.formulario);
     }
   }
 
@@ -64,22 +63,26 @@ export class UsuarioCadastroComponent implements OnInit {
     usuario.dataNascimento = this.formulario.get('dataNascimento').value;
     usuario.escolaridade = this.formulario.get('escolaridade').value;
 
-    console.log(usuario);
-
     if (this.id > 0) {
       usuario.id = this.id;
       this.service.put(usuario).subscribe(
         (data: Resposta<Usuario>) => {
           console.log(data);
+          this.router.navigateByUrl('/usuarios')
         },
-        (erro: Resposta<Usuario>) => console.log(erro)
+        (erro) => 
+          {console.log(erro);       
+        }
       );
     } else {
       this.service.post(usuario).subscribe(
         (data: Resposta<Usuario>) => {
           console.log(data);
+          this.router.navigateByUrl('/usuarios');
         },
-        (erro: Resposta<Usuario>) => console.log(erro)
+        (erro) => {
+          console.log(erro);         
+        } 
       );
     }
   }
@@ -88,9 +91,9 @@ export class UsuarioCadastroComponent implements OnInit {
     this.service.delete(this.id).subscribe(
       (data: Resposta<boolean>) => {
         console.log(data);
+        this.router.navigateByUrl('/usuarios');
       },
       (erro: Resposta<boolean>) => console.log(erro)
     );
   }
-
 }
