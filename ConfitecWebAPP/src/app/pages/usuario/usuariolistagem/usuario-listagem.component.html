@@ -2,24 +2,72 @@
     Listagem de usuários
 </h1>
 <br>
+<form [formGroup]="formularioConsulta" (ngSubmit)="submitForm()">
+    <div class="row">
+        <div class="col-1">
+            <div class="form-group">
+                <label for="id" class="control-label">Id</label>
+                <input type="number" formControlName="id" class="form-control">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label for="nome" class="control-label">Nome</label>
+                <input type="text" formControlName="nome" class="form-control">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label for="sobrenome" class="control-label">Sobrenome</label>
+                <input type="text" formControlName="sobrenome" class="form-control">
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label for="dataNascimento" class="control-label">Data de Nascimento</label>
+                <input type="datetime-local" formControlName="dataNascimento" class="form-control">
+            </div>
+        </div>     
+        <div class="col-2">
+            <label for="escolaridade" class="control-label">Escolaridade</label>
+            <select formControlName="escolaridade" class="form-control">
+                <option value="" disabled selected>Selecione</option>
+                <option value="0">INFANTIL</option>
+                <option value="1">FUNDAMENTAL</option>
+                <option value="2">MEDIO</option>
+                <option value="3">SUPERIOR</option>
+            </select>            
+        </div>   
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-2">
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+        </div>  
+        <div class="col-2">
+            <button type="button" class="btn btn-success" (click)="novoUsuario()">Novo Usuário</button>
+        </div>      
+    </div>
+</form>
+<br>
 <table class="table table-responsive table-hover">
     <thead>
         <th>Id</th>
         <th>Nome</th>
         <th>Sobrenome</th>
         <th>Data de Nascimento</th>
+        <th>Escolaridade</th>
     </thead>
     <tbody>
         <tr *ngFor="let usuario of usuarios | paginate: { itemsPerPage: 10, currentPage: paginaAtual }">
             <td>{{usuario.id}}</td>
             <td>{{usuario.nome}}</td>
             <td>{{usuario.sobrenome}}</td>
-            <td>{{usuario.dataNascimento | date: 'M/d/yy, h:mm a'}}</td>
+            <td>{{usuario.dataNascimento | date: 'd/M/yy, h:mm'}}</td>
+            <td>{{ escolaridades[usuario.escolaridade].value }}</td>
             <td><button class="btn btn-warning" (click)="alterar(usuario.id)">Alterar</button></td>
         </tr>
     </tbody>    
 </table>
 
 <pagination-controls (pageChange)="pageChange($event)" previousLabel="Anterior" nextLabel="Próximo"></pagination-controls>
-<button type="button" class="btn btn-success" (click)="novoUsuario()">Novo Usuário</button>
-
